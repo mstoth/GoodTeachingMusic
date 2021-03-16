@@ -6,10 +6,10 @@ from pymongo import MongoClient
 import os
 app = Flask(__name__)
 
-uri = "mongodb://127.0.0.1:27017"
-client = pymongo.MongoClient(uri)
-database = client["goodteachingmusic"]
-collection = database['pieces']
+# uri = "mongodb://127.0.0.1:27017"
+# client = pymongo.MongoClient(uri)
+# database = client["goodteachingmusic"]
+# collection = database['pieces']
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,7 +18,7 @@ load_dotenv()
 def create_app():
     app = Flask(__name__)
     client = MongoClient(os.environ.get("MONGODB_URI"))
-    app.db = client.microblog
+    app.db = client.goodteachingmusic
 
     @app.route("/", methods=["GET", "POST"])
     def home():
@@ -28,23 +28,18 @@ def create_app():
             # formatted_date = datetime.datetime.today().strftime("%Y-%m-%d")
             # app.db.entries.insert({"content": entry_content, "date": formatted_date})
 
-        pieces = [ (entry["title"],entry["composer"],entry["instrument"]) for entry in app.db.pieces.find({})]
-
+        pieces = [ (entry["title"],entry["composer"],entry["instrument"])
+                   for entry in app.db.pieces.find({})]
         return render_template("home.html", pieces=pieces)
+
+    @app.route('/authentication', methods=['POST', 'GET'])
+    def authenticate():
+        if request.method == 'POST':
+            uname = request.form['username']
+            password = request.form['password']
 
     return app
 
-
-@app.route('/')
-def hello_world():
-    pieces = collection.find()
-    return render_template('home.html',pieces=pieces)
-
-@app.route('/authentication', methods=['POST','GET'])
-def authenticate():
-    if request.method == 'POST':
-        uname = request.form['username']
-        password = request.form['password']
 
 if __name__ == '__main__':
     app.run()
