@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 uri = "mongodb://127.0.0.1:27017"
 client = pymongo.MongoClient(uri)
-database = client["fullstack"]
+database = client["goodteachingmusic"]
 collection = database['pieces']
 from dotenv import load_dotenv
 
@@ -28,7 +28,7 @@ def create_app():
             # formatted_date = datetime.datetime.today().strftime("%Y-%m-%d")
             # app.db.entries.insert({"content": entry_content, "date": formatted_date})
 
-        pieces = [ (entry["title"],entry["composer"],entry["instrument"]) for entry in app.db.entries.find({})]
+        pieces = [ (entry["title"],entry["composer"],entry["instrument"]) for entry in app.db.pieces.find({})]
 
         return render_template("home.html", pieces=pieces)
 
