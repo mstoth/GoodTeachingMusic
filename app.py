@@ -3,7 +3,7 @@ import pymongo
 from models.user import User
 from common.database import Database
 from pymongo import MongoClient
-
+import os
 app = Flask(__name__)
 
 uri = "mongodb://127.0.0.1:27017"
