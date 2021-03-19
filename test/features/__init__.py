@@ -12,10 +12,19 @@ from aloe import before, step, world
 from splinter import Browser
 browser=Browser(headless=True)
 
+@step(r"I visit the web site")
+def visit_site(self):
+    browser.visit('http://127.0.0.1:5000')
+
 @step(r"I am on the home page")
 def _I_am_on_the_home_page(self):
     browser.visit('http://127.0.0.1:5000/')
 
-@step(r"I should see a list of pieces")
+@step(r"I should see the list")
 def _I_should_see_a_list_of_pieces(self):
     browser.find_by_tag('ul')
+    browser.find_by_name('filterbox')
+
+@step(r"Then I should see a refresh button")
+def _Then_I_should_see_a_refresh_button(self):
+    browser.find_by_name("refresh")

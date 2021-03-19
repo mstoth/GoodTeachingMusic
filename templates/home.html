@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container">
-        <h1>Welcome</h1>
-        <ul>
+    <div class="container list-group">
+        <h1>{{ pieces|length() }} Pieces</h1>
+        <div class="form-group" name="filterbox">
+            <form id="filter-form" method='post'>
+                <label for="composer" >Composer</label>
+                <input class="form-control" type="text" id="composer" value=composer name="composer">
+            </form>
+        </div>
+        <ul class="list-group">
             {% for piece in pieces %}
-                <li>
-                    <p>{{ piece.title }}</p>
+                <li class="list-group-item">
+                    <p> {{ piece[0] }}</p>
                 </li>
             {% endfor %}
         </ul>
