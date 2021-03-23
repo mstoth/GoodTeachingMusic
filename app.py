@@ -14,15 +14,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def create_app():
+    app = Flask(__name__)
+    print(f"client uri is {os.environ.get('MONGODB_URI')}")
+    client = MongoClient(os.environ.get("MONGODB_URI"))
+    app.db = client.goodteachingmusic
+    return app
 
-app = Flask(__name__)
-print(f"client uri is {os.environ.get('MONGODB_URI')}")
-client = MongoClient(os.environ.get("MONGODB_URI"))
-app.db = client.goodteachingmusic
-col = app.db.pieces.find({})
-for c in col:
-    print(c["title"])
-
+app=create_app()
 
 @app.route("/", methods=['POST', 'GET'])
 def home():
