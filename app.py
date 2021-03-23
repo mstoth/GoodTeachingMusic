@@ -27,14 +27,40 @@ for c in col:
 @app.route("/", methods=['POST', 'GET'])
 def home():
     composer=None
+    title=None
+    instrument=None
+
     if request.method=='POST':
-        composer=request.form['composer']
+        print("json:")
+        print(request.json)
+        composer=request.form['composer'].strip()
+        title = request.form['title'].strip()
+        instrument = request.form['instrument'].strip()
+
+        c=t=i=None
+        qd={}
+        if len(composer) > 0:
+            qd['composer']=composer
+        if len(title) > 0:
+            qd['title']=title
+        if len(instrument) > 0:
+            qd['instrument']=instrument
+
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        print(qd)
+        # qd=eval(q)
+        # print(type(qd))
+        f=app.db.pieces.find(qd)
         pieces = [(entry["title"], entry["composer"], entry["instrument"])
-                  for entry in app.db.pieces.find({'composer':composer})]
+                      for entry in app.db.pieces.find(qd)]
     else:
         pieces = [ (entry["title"],entry["composer"],entry["instrument"])
                for entry in app.db.pieces.find({})]
-    return render_template("home.html", pieces=pieces, composer=composer)
+    if composer is not None:
+        composer = composer.strip()
+    if title is not None:
+        title = title.strip()
+    return render_template("home.html", pieces=pieces, composer=composer, title=title, instrument=instrument)
 
 @app.route("/login")
 def login():
