@@ -4,36 +4,48 @@
         <h1>{{ pieces|length() }} Pieces</h1>
         <div name="filterbox">
             <form class="form-inline" id="filter-form" method='post' action="/">
-            <div class="form-group">
-                <label for="composer" class="col-form-label" style=" padding-right: 20px">Composer</label>
-                {%  if composer %}
-                    <input class="form-control col" type="text" style="padding-right: 20px" id="composer" value={{ composer }} name="composer">
-                {% else %}
-                    <input style="padding-right: 20px" class="col form-control" type="text" style="padding-right: 20px" id="composer" value="" name="composer">
-                {% endif %}
+                <div class="form-group">
+                    <label for="composer" class="col-form-label" style=" padding-right: 20px">Composer</label>
+                    {% if composer %}
+                        <input class="form-control col" type="text" style="padding-right: 20px" id="composer"
+                               value={{ composer }} name="composer">
+                    {% else %}
+                        <input style="padding-right: 20px" class="col form-control" type="text"
+                               style="padding-right: 20px" id="composer" value="" name="composer">
+                    {% endif %}
 
-                <label for="instrument" style="padding-left:20px; padding-right: 20px" class="col-form-label">Instrument</label>
-                {%  if instrument %}
-                    <input style="padding-left:20px; padding-right: 20px" class="form-control col" type="text" id="instrument" value={{ instrument }} name="instrument">
-                {% else %}
-                    <input style="padding-left:20px; padding-right: 20px" class="col form-control" type="text" id="instrument" value="" name="instrument">
-                {% endif %}
+                    <label for="instrument" style="padding-left:20px; padding-right: 20px" class="col-form-label">Instrument</label>
+                    {% if instrument %}
+                        <input style="padding-left:20px; padding-right: 20px" class="form-control col" type="text"
+                               id="instrument" value={{ instrument }} name="instrument">
+                    {% else %}
+                        <input style="padding-left:20px; padding-right: 20px" class="col form-control" type="text"
+                               id="instrument" value="" name="instrument">
+                    {% endif %}
 
-                <label style="padding-left:20px; padding-right: 20px" class="col-form-label" for="title" >Title</label>
-                {%  if title %}
-                    <input style="padding-right: 20px" class="col form-control" type="text" id="title" value={{ title }} name="title">
-                {% else %}
-                    <input style="padding-right: 20px" class="col form-control" type="text" id="title" value="" name="title">
-                {% endif %}
-                    <button style="margin-left: 20px" type="submit" class="col btn btn-primary" id="submit-button">Submit </button>
-
-            </div>
+                    <label style="padding-left:20px; padding-right: 20px" class="col-form-label"
+                           for="title">Title</label>
+                    {% if title %}
+                        <input style="padding-right: 20px" class="col form-control" type="text" id="title"
+                               value={{ title }} name="title">
+                    {% else %}
+                        <input style="padding-right: 20px" class="col form-control" type="text" id="title" value=""
+                               name="title">
+                    {% endif %}
+                    <button style="margin-left: 20px" type="submit" class="col btn btn-primary" id="submit-button">
+                        Submit
+                    </button>
+                </div>
             </form>
         </div>
+        <div class="box">
+            <a name="reset" href="/">Reset</a>
+        </div>
+
         <ul class="list-group">
             {% for piece in pieces %}
                 <li class="list-group-item">
-                    <p> {{ piece[0] }}</p>
+                    <p> {{ piece[1] }} {{ piece[0] }}</p>
                 </li>
             {% endfor %}
         </ul>

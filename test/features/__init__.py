@@ -25,27 +25,21 @@ def _I_should_see_a_list_of_pieces_step(self):
     browser.find_by_tag('ul')
     browser.find_by_name('filterbox')
 
-@step(r"I fill in composer with Bach")
-def fill_in_composer_step(self):
-    browser.fill('composer','Bach')
+@step(r'I fill in composer with "([^"]+)"')
+def fill_in_composer_step(self,composer):
+    browser.fill('composer',composer)
     b=browser.find_by_id('submit-button')
     b.click()
 
-@step(r"I fill in title with Prelude")
-def fill_in_composer_step(self):
-    browser.fill('title','Prelude')
+@step(r'I fill in title with "([^"]+)"')
+def fill_in_title_step(self,title):
+    browser.fill('title',title)
     b=browser.find_by_id('submit-button')
     b.click()
 
-@step(r"I fill in composer with Bach")
-def fill_in_composer_step(self):
-    browser.fill('composer','Bach')
-    b=browser.find_by_id('submit-button')
-    b.click()
-
-@step(r"I fill in instrument with Piano")
-def fill_in_instrument_step(self):
-    browser.fill('instrument','Piano')
+@step(r'I fill in instrument with "([^"]+)"')
+def fill_in_instrument_step(self,inst):
+    browser.fill('instrument',inst)
     b=browser.find_by_id('submit-button')
     b.click()
 
@@ -64,11 +58,12 @@ def _I_should_see_two_item_in_the_list(self):
     l=browser.find_by_tag("li")
     assert len(l) == 2, f"List length is {len(l)}"
 
-@step(r"I fill in title with w")
-def _I_fill_in_title_with_w(self):
-    browser.fill("title","w")
-
 @step(r"I should see no items in the list")
 def _I_should_see_no_items_in_the_list(self):
     l=browser.find_by_tag("li")
     assert len(l) == 0, f"List length is {len(l)}"
+
+@step(r'When I click on reset')
+def _I_click_on_reset(self):
+    r=browser.find_by_name("reset")
+    r.click()
