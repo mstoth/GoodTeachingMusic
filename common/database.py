@@ -4,12 +4,12 @@ import pymongo
 class Database(object):
     # URI = "mongodb+srv://admin:G1nestera@cluster0.a9jhp.mongodb.net/test"
     URI = "mongodb://127.0.0.1:27017"
-    DATABASE = None
+    DATABASE = 'goodteachingmusic'
 
     @staticmethod
     def initialize():
         client = pymongo.MongoClient(Database.URI)
-        Database.DATABASE = client['fullstack']
+        Database.DATABASE = 'goodteachingmusic'
 
     @staticmethod
     def insert(collection, data):

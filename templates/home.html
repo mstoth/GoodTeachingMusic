@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
-        <h1>{{ pieces|length() }} Pieces</h1>
+        <h1>Good Teaching Music </h1> <h3>{{ pieces|length() }} Pieces</h3>
         <div name="filterbox">
             <form class="form-inline" id="filter-form" method='post' action="/">
                 <div class="form-group">
@@ -42,10 +42,12 @@
             <a name="reset" href="/">Reset</a>
         </div>
 
+    <form id="blank" method="post"></form>
         <ul class="list-group">
             {% for piece in pieces %}
                 <li class="list-group-item">
-                    <p> {{ piece[1] }} {{ piece[0] }}</p>
+                    <button form="blank" type="submit" formaction="/delete/{{ piece[0] }}">Delete</button>
+                    <p> {{ piece[2] }} {{ piece[1] }}</p>
                 </li>
             {% endfor %}
         </ul>
