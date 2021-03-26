@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, jsonify
+from flask import Flask, render_template, request, session, jsonify, redirect, url_for
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
@@ -15,9 +15,9 @@ def create_app():
     @app.route("/json", methods = ["POST","GET"])
     def json_entry():
         if request.method == 'POST':
-            composer = request.form['composer'].strip()
-            title = request.form['title'].strip()
-            instrument = request.form['instrument'].strip()
+            composer = request.form['composer']
+            title = request.form['title']
+            instrument = request.form['instrument']
 
             c = t = i = None
             qd = {}
@@ -66,14 +66,17 @@ def create_app():
                 app.db.pieces.remove({'id':id})
         pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"])
                   for entry in app.db.pieces.find({})]
-        return render_template("home.html", pieces=pieces)
-    @app.route("/delete/all",methods=['GET','POST'])
+        return redirect(url_for('home',pieces=pieces))
 
+
+    @app.route("/delete/all",methods=['GET','POST'])
     def delall():
         app.db.pieces.remove({})
         pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"])
                   for entry in app.db.pieces.find({})]
         return render_template('home.html',pieces=pieces)
+
+
 
     @app.route("/", methods=['POST', 'GET'])
     @app.route("/home")
@@ -82,6 +85,8 @@ def create_app():
         composer=None
         title=None
         instrument=None
+        sort_by_title=False
+        sort_by_composer=False
         for key in request.args.keys():
             if key=="title":
                 title=request.args[key]
@@ -91,6 +96,10 @@ def create_app():
                 instrument=request.args[key]
             if key=="type":
                 returnType=request.args[key]
+            if key=="sort_by_title":
+                sort_by_title=True
+            if key == "sort_by_composer":
+                sort_by_composer = True
         qd={}
         if title:
             qd['title']=title
@@ -99,7 +108,14 @@ def create_app():
         if instrument:
             qd['instrument']=instrument
 
-        pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"])
+        if sort_by_title:
+            pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
+                      for entry in app.db.pieces.find(qd).sort("title",1)]
+        elif sort_by_composer:
+            pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
+                      for entry in app.db.pieces.find(qd).sort("composer",1)]
+        else:
+            pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
                   for entry in app.db.pieces.find(qd)]
 
         if request.method=='POST':
@@ -132,16 +148,15 @@ def create_app():
             else:
                 return jsonify(pieces)
 
+    @app.route("/details/<int:id>", methods=['POST','GET'])
+    def details(id=""):
+        c=app.db.pieces.find_one({'id':id})
+        return render_template("detail.html",piece=c)
 
     @app.route("/login")
     def login():
         return render_template("login.html")
 
-    @app.route('/authentication', methods=['POST', 'GET'])
-    def authenticate():
-        if request.method == 'POST':
-            uname = request.form['username']
-            password = request.form['password']
 
     return app
 

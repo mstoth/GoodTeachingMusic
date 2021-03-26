@@ -39,15 +39,16 @@
             </form>
         </div>
         <div class="box">
+            <a name="sort_by_title" href="/?sort_by_title">Sort by Title</a>
             <a name="reset" href="/">Reset</a>
         </div>
 
     <form id="blank" method="post"></form>
         <ul class="list-group">
             {% for piece in pieces %}
-                <li class="list-group-item">
-                    <button form="blank" type="submit" formaction="/delete/{{ piece[0] }}">Delete</button>
-                    <p> {{ piece[2] }} {{ piece[1] }}</p>
+                <li  class="list-group-item">
+                    <button form="blank" type="submit" formaction="/details/{{ piece[0] }}">Details</button>
+                    <p> {{ piece[2] }} - {{ piece[1] }} - <a href="{{ piece[4] }}">Recording</a></p>
                 </li>
             {% endfor %}
         </ul>

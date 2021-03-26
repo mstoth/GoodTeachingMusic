@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <form id="blank" method="post"></form>
+    <div class="container">
+        <h1>{{ piece.title }}</h1>
+        <h3>Composer: {{ piece.composer }}</h3>
+        <h3>Instrument: {{ piece.instrument }}</h3>
+        <h3>Recording: {{ piece.recording }}</h3>
+        <h3>Difficulty: {{ piece.difficulty }}</h3>
+        <h3>Genre: {{ piece.difficulty }}</h3>
+        <h3>Sheet Music: {{ piece.sheet }}</h3>
+        <h3>Comment: {{ piece.comment }}</h3>
+        <button form="blank" formaction="/delete/{{ piece.id }}">Delete</button>
+    </div>
+{% endblock %}
