@@ -29,3 +29,7 @@ Scenario: Searching for nonexisting title
     Then I should see no items in the list
     When I click on reset
     Then I should see two items in the list
+
+Scenario: Getting JSON representation with the /json path
+    When I visit json
+    Then Then I should see the expected JSON encoding

@@ -11,6 +11,8 @@ from aloe import before, step, world
 
 from splinter import Browser
 browser=Browser(headless=True)
+import requests
+
 
 @step(r"I visit the web site")
 def visit_site_step(self):
@@ -67,3 +69,12 @@ def _I_should_see_no_items_in_the_list(self):
 def _I_click_on_reset(self):
     r=browser.find_by_name("reset")
     r.click()
+
+@step(r'I visit json')
+def _I_visit_step(self):
+    browser.visit('http://127.0.0.1:5000/json')
+
+@step(r'Then I should see the expected JSON encoding')
+def _I_should_see_step(self):
+    result=requests.get(browser.url).json()
+    assert result ==  [['Prelude', 'Bach', 'Piano'], ['Waltz', 'Chopin', 'Piano']]

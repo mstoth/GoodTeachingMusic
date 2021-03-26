@@ -38,6 +38,7 @@ def create_app():
     @app.route("/", methods=['POST', 'GET'])
     @app.route("/home")
     def home():
+        returnType=None
         composer=None
         title=None
         instrument=None
@@ -48,6 +49,8 @@ def create_app():
                 composer=request.args[key]
             if key=="instrument":
                 instrument=request.args[key]
+            if key=="type":
+                returnType=request.args[key]
         qd={}
         if title:
             qd['title']=title
@@ -84,7 +87,10 @@ def create_app():
                 return render_template("home.html", pieces=pieces, composer=composer, title=title,
                                        instrument=instrument)
         else:
-            return render_template("home.html", pieces=pieces, composer=composer, title=title, instrument=instrument)
+            if returnType is None:
+                return render_template("home.html", pieces=pieces, composer=composer, title=title, instrument=instrument)
+            else:
+                return jsonify(pieces)
 
 
     @app.route("/login")
