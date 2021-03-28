@@ -45,6 +45,7 @@
             </div>
             <input type="hidden" name="id" value="{{ piece.id }}">
             <button type="submit" class="btn btn-primary mb-2">Update</button>
+            <button type="submit" formaction="/delete/{{ piece.id }}" method='post' class="btn mb-2">Delete</button>
         </form>
 
 {#    </div>#}
