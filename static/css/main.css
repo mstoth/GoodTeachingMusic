@@ -2,7 +2,9 @@
 body {
     margin-top:50px;
 }
-
+form {
+    max-width: 480px;
+}
 h1 {
     color:green;
 }

@@ -115,6 +115,10 @@ def create_app():
             pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
                       for entry in app.db.pieces.find(qd).sort("composer",1)]
         else:
+            r=app.db.pieces.find(qd)
+            for entry in r:
+                print(entry)
+
             pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
                   for entry in app.db.pieces.find(qd)]
 
@@ -147,6 +151,14 @@ def create_app():
                 return render_template("home.html", pieces=pieces, composer=composer, title=title, instrument=instrument)
             else:
                 return jsonify(pieces)
+
+    @app.route("/update/<int:id>", methods=['POST'])
+    def update(id=""):
+        result = request.form.to_dict(flat=True)
+        sid=result['id']
+        result['id']=int(sid)
+        app.db.pieces.update({'id':id},result)
+        return redirect(url_for('home'))
 
     @app.route("/details/<int:id>", methods=['POST','GET'])
     def details(id=""):
