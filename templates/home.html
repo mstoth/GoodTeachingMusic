@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
         <h1>Good Teaching Music </h1> <h3>{{ pieces|length() }} Pieces</h3>
-        <div name="filterbox">
+        <div name="filterbox" style="max-width: 600px">
             <form class="form-inline" id="filter-form" method='post' action="/">
                 <div class="form-group">
                     <label for="composer" class="col-form-label" style=" padding-right: 20px">Composer</label>
@@ -23,15 +23,27 @@
                                id="instrument" value="" name="instrument">
                     {% endif %}
 
-                    <label style="padding-left:20px; padding-right: 20px" class="col-form-label"
-                           for="title">Title</label>
-                    {% if title %}
-                        <input style="padding-right: 20px" class="col form-control" type="text" id="title"
-                               value={{ title }} name="title">
+                    <label for="genre" style="padding-left:20px; padding-right: 20px" class="col-form-label">Genre</label>
+                    {% if genre %}
+                        <input style="padding-left:20px; padding-right: 20px" class="form-control col" type="text"
+                               id="genre" value={{ genre }} name="genre">
                     {% else %}
-                        <input style="padding-right: 20px" class="col form-control" type="text" id="title" value=""
-                               name="title">
+                        <input style="padding-left:20px; padding-right: 20px" class="col form-control" type="text"
+                               id="genre" value="" name="genre">
                     {% endif %}
+
+
+                </div>
+                <div class="form-group">
+                    <label for="difficulty" style="padding-left:20px; padding-right: 20px" class="col-form-label">Difficulty</label>
+                    {% if instrument %}
+                        <input style="padding-left:20px; padding-right: 20px" class="form-control col" type="text"
+                               id="difficulty" value={{ instrument }} name="difficulty">
+                    {% else %}
+                        <input style="padding-left:20px; padding-right: 20px" class="col form-control" type="text"
+                               id="difficulty" value="" name="difficulty">
+                    {% endif %}
+
                     <button style="margin-left: 20px" type="submit" class="col btn btn-primary" id="submit-button">
                         Submit
                     </button>
