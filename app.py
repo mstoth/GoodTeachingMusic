@@ -104,12 +104,17 @@ def create_app():
         instrument = None
         sort_by_title = False
         sort_by_composer = False
-        for key in request.args.keys():
+        argdict=request.args.to_dict()
+        d={}
+        for key in argdict:
             if key == "title":
+                d[key] = argdict[key]
                 title = request.args[key]
             if key == "composer":
+                d[key] = argdict[key]
                 composer = request.args[key]
             if key == "instrument":
+                d[key] = argdict[key]
                 instrument = request.args[key]
             if key == "type":
                 returnType = request.args[key]
@@ -117,58 +122,42 @@ def create_app():
                 sort_by_title = True
             if key == "sort_by_composer":
                 sort_by_composer = True
-        qd = {}
-        if title:
-            qd['title'] = title
-        if composer:
-            qd['composer'] = composer
-        if instrument:
-            qd['instrument'] = instrument
 
         if sort_by_title:
-            pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
-                      for entry in app.db.pieces.find(qd).sort("title", 1)]
+            pieces = [entry for entry in app.db.pieces.find(d).sort("title", 1)]
         elif sort_by_composer:
-            pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
-                      for entry in app.db.pieces.find(qd).sort("composer", 1)]
+            pieces = [entry for entry in app.db.pieces.find(d).sort("composer", 1)]
         else:
-            r = app.db.pieces.find(qd)
-            for entry in r:
-                print(entry)
-
-            pieces = [(entry["id"], entry["title"], entry["composer"], entry["instrument"], entry["recording"])
-                      for entry in app.db.pieces.find(qd)]
+            pieces = [entry for entry in app.db.pieces.find(d)]
 
         if request.method == 'POST':
-            composer = request.form['composer'].strip()
-            title = request.form['title'].strip()
-            instrument = request.form['instrument'].strip()
-
-            c = t = i = None
-            qd = {}
-            if len(composer) > 0:
-                qd['composer'] = composer
-            if len(title) > 0:
-                qd['title'] = title
-            if len(instrument) > 0:
-                qd['instrument'] = instrument
-
-            f = app.db.pieces.find(qd)
-            pieces = [(entry["title"], entry["composer"], entry["instrument"])
-                      for entry in app.db.pieces.find(qd)]
+            d=request.form.to_dict()
+            d=removeZeroLengthStrings(d)
+            pieces = [entry for entry in app.db.pieces.find(d)]
 
         if request.headers.has_key('Content-Type'):
             if request.headers['Content-Type'] == 'application/json':
                 return jsonify(pieces)
             else:
-                return render_template("home.html", pieces=pieces, composer=composer, title=title,
-                                       instrument=instrument)
+                return render_template("home.html",pieces=pieces, **d)
         else:
             if returnType is None:
-                return render_template("home.html", pieces=pieces, composer=composer, title=title,
-                                       instrument=instrument)
+                return render_template("home.html", pieces=pieces, **d)
             else:
                 return jsonify(pieces)
+
+    def removeZeroLengthStrings(d):
+        keys2pop=[]
+        for keys in d:
+            if d[keys]=='':
+                keys2pop.append(keys)
+        for k in keys2pop:
+            d.pop(k)
+        newd={}
+        for k in d:
+            newd[k]=d[k].strip()
+        return newd
+
 
     @app.route("/update/<int:id>", methods=['POST', 'GET'])
     def update(id=""):

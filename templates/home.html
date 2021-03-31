@@ -36,9 +36,9 @@
                 </div>
                 <div class="form-group">
                     <label for="difficulty" style="padding-left:20px; padding-right: 20px" class="col-form-label">Difficulty</label>
-                    {% if instrument %}
+                    {% if difficulty %}
                         <input style="padding-left:20px; padding-right: 20px" class="form-control col" type="text"
-                               id="difficulty" value={{ instrument }} name="difficulty">
+                               id="difficulty" value={{ difficulty }} name="difficulty">
                     {% else %}
                         <input style="padding-left:20px; padding-right: 20px" class="col form-control" type="text"
                                id="difficulty" value="" name="difficulty">
@@ -59,8 +59,8 @@
         <ul class="list-group">
             {% for piece in pieces %}
                 <li  class="list-group-item">
-                    <button form="blank" type="submit" formaction="/details/{{ piece[0] }}">Details</button>
-                    <p> {{ piece[2] }} - {{ piece[1] }} - <a href="{{ piece[4] }}">Recording</a></p>
+                    <p> <a href="/details/{{ piece['id'] }}">Details</a>
+                     {{ piece['composer'] }} - {{ piece['title'] }} - {{ piece['difficulty'] }} <a href="{{ piece['recording'] }}">Recording</a></p>
                 </li>
             {% endfor %}
         </ul>

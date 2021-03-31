@@ -1,46 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
-    <div style="max-width:600px" class="container">
+    <h1>Detail View</h1>
+    <div style="max-width:800px" class="container">
         <form id="update-form" name="update-form" class="form-group" action="/update/{{ piece.id }}" method="post" >
             <div class="form-group row">
-                <label class="col-sm-2" for="title">Title</label>
-                <input type="text" class="form-control col-sm-10" id="title" name="title"
+                <label class="col-3" for="title">Title</label>
+                <input type="text" class="form-control col-8" id="title" name="title"
                        placeholder="Title" value="{{ piece.title }}">
             </div>
             <div class="form-group row">
-                <label class="col-sm-2" for="title">Composer</label>
-                <input type="text"  class="form-control col-sm-10"  id="composer" name="composer"
+                <label class="col-3" for="composer">Composer</label>
+                <input type="text"  class="form-control col-8"  id="composer" name="composer"
                        placeholder="Composer" value="{{ piece.composer }}">
             </div>
             <div class="form-group row">
-                <label class="col-sm-2" for="instrument">Instrument</label>
-                <input type="text"  class="form-control col-sm-10"  id="instrument" name="instrument"
+                <label class="col-3" for="instrument">Instrument</label>
+                <input type="text"  class="form-control col-8"  id="instrument" name="instrument"
                        placeholder="Instrument" value="{{ piece.instrument }}">
             </div>
             <div class="form-group row">
-                <label class="col-sm-2" for="recording">Recording</label>
-                <input type="text"  class="form-control col-sm-10"  id="recording" name="recording"
+                <label class="col-3" for="recording">Recording</label>
+                <input type="text"  class="form-control col-8"  id="recording" name="recording"
                        placeholder="Recording" value="{{ piece.recording }}">
             </div>
             <div class="form-group row">
-                <label class="col-sm-2" for="difficulty">Difficulty</label>
-                <input type="difficulty"  class="form-control col-sm-10"  id="difficulty" name="difficulty"
+                <label class="col-3" for="difficulty">Difficulty</label>
+                <input type="difficulty"  class="form-control col-8"  id="difficulty" name="difficulty"
                        placeholder="Difficulty" value="{{ piece.difficulty }}">
             </div>
             <div class="form-group row">
-                <label class="col-sm-2" for="sheet">Sheet Music</label>
-                <input type="text"  class="form-control col-sm-10"  id="sheet" name="sheet"
+                <label class="col-3" for="sheet">Sheet Music</label>
+                <input type="text"  class="form-control col-8"  id="sheet" name="sheet"
                        placeholder="Sheet Music" value="{{ piece.sheet }}">
             </div>
             <div class="form-group row">
-                <label class="col-sm-2" for="genre">Genre</label>
-                <input type="text"  class="form-control col-sm-10" id="genre" name="genre"
+                <label class="col-3" for="genre">Genre</label>
+                <input type="text"  class="form-control col-8" id="genre" name="genre"
                        placeholder="Genre" value="{{ piece.genre }}">
             </div>
             <div class="form-group row">
-                <label class="col-sm-2" for="comment">Comment</label>
-                <input type="text"  class="form-control col-sm-10"  id="comment" name="comment"
+                <label class="col-3" for="comment">Comment</label>
+                <input type="text"  class="form-control col-8"  id="comment" name="comment"
                        placeholder="Comment" value="{{ piece.comment }}">
             </div>
             <input type="hidden" name="id" value="{{ piece.id }}">
