@@ -51,7 +51,8 @@
             </form>
         </div>
         <div class="box">
-            <a name="sort_by_title" href="/?sort_by_title">Sort by Title</a>
+            <a name="sort_by_title" href="/?sort_by_title">Sort by Title</a> -
+            <a name="sort_by_composer" href="/?sort_by_composer">Sort by Composer</a> -
             <a name="reset" href="/">Reset</a>
         </div>
 
@@ -59,8 +60,9 @@
         <ul class="list-group">
             {% for piece in pieces %}
                 <li  class="list-group-item">
-                    <p> <a href="/details/{{ piece['id'] }}">Details</a>
-                     {{ piece['composer'] }} - {{ piece['title'] }} - {{ piece['difficulty'] }} <a href="{{ piece['recording'] }}">Recording</a></p>
+                    <p>
+                     {{ piece['composer'] }} - {{ piece['title'] }} - {{ piece['difficulty'] }}
+                        - {{ piece['genre'] }} - <a href="{{ piece['recording'] }}">Recording</a> - <a href="/details/{{ piece['id'] }}">Details</a></p>
                 </li>
             {% endfor %}
         </ul>
